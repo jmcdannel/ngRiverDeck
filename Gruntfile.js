@@ -64,6 +64,10 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      includeSource: {
+        files: ['<%= yeoman.app %>/index.html'],
+        tasks: ['includeSource:server']
       }
     },
 
@@ -236,6 +240,21 @@ module.exports = function (grunt) {
       }
     },
 
+    // Compile JADE to HTML views
+    jade: {
+      compile: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/modules/',
+            src: ['**/*.jade'],
+            dest: '<%= yeoman.app %>/views/',
+            ext: '.html'
+          }
+        ]
+      }
+    },
+
     // Renames files for browser caching purposes
     filerev: {
       dist: {
@@ -252,7 +271,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -382,6 +401,23 @@ module.exports = function (grunt) {
       }
     },
 
+    includeSource: {
+      options: {
+        basePath: 'app',
+        baseUrl: '/',
+      },
+      server: {
+        files: {
+          '.tmp/index.html': '<%= yeoman.app %>/index.html'
+        }
+      },
+      dist: {
+        files: {
+          '.tmp/index.html': '<%= yeoman.app %>/index.html'
+        }
+      }
+    },
+
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -444,6 +480,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'includeSource:server',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
@@ -459,6 +496,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'includeSource:server',
     'wiredep',
     'concurrent:test',
     'autoprefixer',
@@ -468,6 +506,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'includeSource:server',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',

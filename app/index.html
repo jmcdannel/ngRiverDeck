@@ -20,6 +20,9 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+    <header ui-view="header"></header>
+    <section ui-view="content"></section>
+    <footer ui-view="footer"></footer>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -49,12 +52,17 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/hammerjs/hammer.js"></script>
     <script src="bower_components/foundation-apps/dist/js/foundation-apps.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    <!-- modules init -->
+    <!-- include: "type": "js", "files": ["scripts/**/*module*.js"] -->
+    <!-- modules -->
+    <!-- include: "type": "js", "files": ["scripts/**/*.js", "!scripts/*.js", "!scripts/**/*module*.js"] -->
     <!-- endbuild -->
 </body>
 </html>
