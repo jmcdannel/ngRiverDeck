@@ -1,5 +1,5 @@
 {
-  "name": "ngriverdeck",
+  "name": "ng-river-deck",
   "private": true,
   "devDependencies": {
     "grunt": "^0.4.5",
