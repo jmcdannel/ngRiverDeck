@@ -21,7 +21,14 @@
   */
   angular
     .module('RiverDeckApp', [
-      'RiverDeckApp.core'
+      'RiverDeckApp.core',
+      'RiverDeckApp.deck',
+      'RiverDeckApp.footer',
+      'RiverDeckApp.header',
+      'RiverDeckApp.log',
+      'RiverDeckApp.nav',
+      'RiverDeckApp.rivers',
+      'RiverDeckApp.users'
     ]);
 
 })();
