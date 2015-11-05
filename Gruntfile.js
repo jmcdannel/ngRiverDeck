@@ -52,6 +52,13 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer:server']
       },
+      jade: {
+        files: ['<%= yeoman.app %>/scripts/modules/{,*/}*.jade'],
+        tasks: ['jade'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -480,6 +487,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'jade',
       'includeSource:server',
       'wiredep',
       'concurrent:server',
@@ -506,6 +514,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'jade',
     'includeSource:server',
     'wiredep',
     'useminPrepare',

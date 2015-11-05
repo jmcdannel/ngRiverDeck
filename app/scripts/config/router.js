@@ -1,4 +1,4 @@
-;
+; // jshint ignore:line
 (function() {
   'use strict';
 
@@ -16,8 +16,17 @@
   }]);
 
   angular
-    .module('RiverDeckApp.core').config(function($stateProvider, $urlRouterProvider, viewPath) {
-      $urlRouterProvider.otherwise('/');
+    .module('RiverDeckApp.core').config(function($stateProvider, $urlRouterProvider) {
+
+      var viewPath = 'views/{0}/views/{1}.html';
+      var requireAuth = ['authService', function(authService) {
+        return authService.getRef().$requireAuth();
+      }];
+      // var waitForAuth = ['authService', function(authService) {
+      //   return authService.getRef().$waitForAuth();
+      // }];
+
+      $urlRouterProvider.otherwise('/login');
 
       $stateProvider
 
@@ -27,7 +36,7 @@
         .state('login', {
           url: '/login',
           views: {
-            'content': { templateUrl: templatePath.format('core', 'layout') }
+            'content': { templateUrl: viewPath.format('users', 'layout') }
           }
         })
 
@@ -35,11 +44,14 @@
          * HOME
          */
         .state('home', {
-          url: '/',
+          url: '/home',
           views: {
-            'content': { templateUrl: templatePath.format('core', 'layout') }
+            'content': {
+              templateUrl: viewPath.format('core', 'layout'),
+              resolve: { 'currentAuth': requireAuth }
+            }
           }
-        })
+        });
 
 
     });

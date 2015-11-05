@@ -1,4 +1,4 @@
-;
+; // jshint ignore:line
 (function() {
   'use strict';
 

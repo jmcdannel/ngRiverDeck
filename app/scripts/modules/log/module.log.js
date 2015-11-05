@@ -1,5 +1,5 @@
 ;
 (function() {
   angular
-    .module('RiverDeckApp.nav', []);
+    .module('RiverDeckApp.log', []);
 })();
