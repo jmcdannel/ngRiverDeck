@@ -1,0 +1,12 @@
+{
+	"users": {
+		"uid": {
+			"name": "name",
+			"rivers": {
+				"riverid": {
+					"name": "rivername"
+				}
+			}
+		}
+	}
+}
