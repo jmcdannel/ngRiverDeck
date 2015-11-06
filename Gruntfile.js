@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
+          middleware: function(connect) {
             return [
               connect.static('.tmp'),
               connect().use(
@@ -101,7 +101,7 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
-          middleware: function (connect) {
+          middleware: function(connect) {
             return [
               connect.static('.tmp'),
               connect.static('test'),
@@ -187,23 +187,23 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
+        ignorePath: /\.\.\//,
+        fileTypes: {
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
             }
           }
+        }
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -243,15 +243,13 @@ module.exports = function (grunt) {
     // Compile JADE to HTML views
     jade: {
       compile: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= yeoman.app %>/scripts/modules/',
-            src: ['**/*.jade'],
-            dest: '<%= yeoman.app %>/views/',
-            ext: '.html'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts/modules/',
+          src: ['**/*.jade'],
+          dest: '<%= yeoman.app %>/views/',
+          ext: '.html'
+        }]
       }
     },
 
@@ -298,7 +296,11 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/styles'
         ],
         patterns: {
-          js: [[/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g, 'Replacing references to images']]
+          js: [
+            [/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g,
+              'Replacing references to images'
+            ]
+          ]
         }
       }
     },
@@ -445,6 +447,12 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      styleguide: {
+        expand: true,
+        cwd: '.tmp/styles',
+        dest: 'style-guide/css/',
+        src: '{,*/}*.css'
       }
     },
 
@@ -473,26 +481,31 @@ module.exports = function (grunt) {
   });
 
 
-  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
-    }
+  grunt.registerTask('serve', 'Compile then start a connect web server',
+    function(target) {
+      if (target === 'dist') {
+        return grunt.task.run(['build', 'connect:dist:keepalive']);
+      }
 
-    grunt.task.run([
-      'clean:server',
-      'includeSource:server',
-      'wiredep',
-      'concurrent:server',
-      'autoprefixer:server',
-      'connect:livereload',
-      'watch'
-    ]);
-  });
+      grunt.task.run([
+        'clean:server',
+        'includeSource:server',
+        'wiredep',
+        'concurrent:server',
+        'autoprefixer:server',
+        'connect:livereload',
+        'watch'
+      ]);
+    });
 
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
+  grunt.registerTask('server',
+    'DEPRECATED TASK. Use the "serve" task instead',
+    function(target) {
+      grunt.log.warn(
+        'The `server` task has been deprecated. Use `grunt serve` to start a server.'
+      );
+      grunt.task.run(['serve:' + target]);
+    });
 
   grunt.registerTask('test', [
     'clean:server',
@@ -521,6 +534,12 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'htmlmin'
+  ]);
+
+  grunt.registerTask('styleguide', [
+    'compass:server',
+    'autoprefixer:server',
+    'copy:styleguide'
   ]);
 
   grunt.registerTask('default', [
